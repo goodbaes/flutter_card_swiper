@@ -42,6 +42,7 @@ class _CardSwiperState<T extends Widget> extends State<CardSwiper>
     _newCardAnimationController = AnimationController(
       duration: widget.duration,
       vsync: this,
+      value: 1.0,
     );
 
     _cardAnimation = CardAnimation(
@@ -90,14 +91,10 @@ class _CardSwiperState<T extends Widget> extends State<CardSwiper>
               return Stack(
                 clipBehavior: Clip.none,
                 fit: StackFit.expand,
-                children: List.generate(
-                  numberOfCardsOnScreen(),
-                  (index) {
-                    final realIndex = numberOfCardsOnScreen() - 1 - index;
-                    if (realIndex == 0) return _frontItem(constraints);
-                    return _backItem(constraints, realIndex);
-                  },
-                ),
+                children: List.generate(numberOfCardsOnScreen(), (index) {
+                  if (index == 0) return _frontItem(constraints);
+                  return _backItem(constraints, index);
+                }).reversed.toList(),
               );
             },
           ),
