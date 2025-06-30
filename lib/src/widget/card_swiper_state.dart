@@ -42,6 +42,7 @@ class _CardSwiperState<T extends Widget> extends State<CardSwiper>
     _newCardAnimationController = AnimationController(
       duration: widget.duration,
       vsync: this,
+      value: 1.0,
     );
 
     _cardAnimation = CardAnimation(
@@ -161,7 +162,7 @@ class _CardSwiperState<T extends Widget> extends State<CardSwiper>
       child: widget.cardBuilder(context, getValidIndexOffset(index)!, 0, 0),
     );
 
-    if (isLastCard && _directionHistory.isNotEmpty) {
+    if (isLastCard) {
       final animation = CurvedAnimation(
         parent: _newCardAnimationController,
         curve: Curves.easeOut,
